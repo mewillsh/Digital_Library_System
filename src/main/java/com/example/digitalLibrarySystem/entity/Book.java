@@ -27,4 +27,11 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "Authorid")
     private Author author;
+
+    public Book(String name, Long isbn, Category category, Author author) {
+        this.name = name;
+        this.isbn = isbn;
+        this.category = category;
+        this.author = author;
+    }
 }

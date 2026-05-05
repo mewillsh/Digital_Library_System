@@ -2,6 +2,7 @@ package com.example.digitalLibrarySystem.service;
 
 import com.example.digitalLibrarySystem.DTO.Request.Author.CreateAuthorDTO;
 import com.example.digitalLibrarySystem.DTO.Request.Author.UpdateAuthorDTO;
+import com.example.digitalLibrarySystem.DTO.Response.Author.AllBooksByAuthor;
 import com.example.digitalLibrarySystem.entity.Author;
 import com.example.digitalLibrarySystem.entity.Book;
 
@@ -12,5 +13,5 @@ public interface AuthorService {
     public List<Author> getAuthors();
     public Author updateAuthor(UpdateAuthorDTO curr);
     public Author deleteAuthor(Long id);
-    public List<Book> findAllBooks(Long id);
+    public AllBooksByAuthor findAllBooks(Long id);
 }
