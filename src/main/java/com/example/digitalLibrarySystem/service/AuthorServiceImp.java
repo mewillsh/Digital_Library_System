@@ -6,6 +6,7 @@ import com.example.digitalLibrarySystem.DTO.Response.Author.AllBooksByAuthor;
 import com.example.digitalLibrarySystem.Repository.AuthorRepository;
 import com.example.digitalLibrarySystem.entity.Author;
 import com.example.digitalLibrarySystem.entity.Book;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @Service
 public class AuthorServiceImp implements AuthorService{
+    @Autowired
     AuthorRepository repository;
     @Override
     public Author createAuthor(CreateAuthorDTO curr) {
@@ -45,7 +47,7 @@ public class AuthorServiceImp implements AuthorService{
     @Override
     public Author deleteAuthor(Long id) {
         Author author=repository.findById(id).orElseThrow(()->new RuntimeException("Author Not Found"));
-        repository.deleteById(author.getAuthorid());
+        repository.deleteById(author.getAuthorId());
         return author;
     }
 
@@ -55,7 +57,7 @@ public class AuthorServiceImp implements AuthorService{
         AllBooksByAuthor result=new AllBooksByAuthor();
         if(optionalAuthor.isPresent()){
             Author author=optionalAuthor.get();
-            List<Book>books=author.getBookId();
+            List<Book>books=author.getBooks();
             List<String>listBooks=new ArrayList<>();
             for(Book book:books){
                 listBooks.add(book.getName());

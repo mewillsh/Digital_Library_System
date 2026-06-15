@@ -14,7 +14,7 @@ public enum Category {
     @JsonCreator
     public static Category form(String val){
         try{
-            return Category.valueOf(val.toUpperCase());
+            return Category.valueOf(val);
         }
         catch(Exception e){
             throw new IllegalArgumentException("This Category is Invalid");

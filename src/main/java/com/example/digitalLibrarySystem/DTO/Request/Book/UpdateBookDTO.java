@@ -13,6 +13,6 @@ public class UpdateBookDTO {
     @NotNull
     private Long id;
     private String name;
-    private Long isbn;
+    private String isbn;
     private Category category;
 }

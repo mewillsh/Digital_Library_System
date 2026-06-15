@@ -1,6 +1,7 @@
 package com.example.digitalLibrarySystem.entity;
 
 import com.example.digitalLibrarySystem.entity.Enum.Nationality;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,7 +18,8 @@ import java.util.List;
 public class Author {
     @Id
     @GeneratedValue
-    private Long Authorid;
+    @Column(name="author_id")
+    private Long authorId;
     @NotNull(message = "Name of Author Cannot be Null")
     @Size(max=50)
     private String name;
@@ -28,7 +30,8 @@ public class Author {
     @NotNull(message = "Nationality Cannot be Null")
     private Nationality nationality;
     @OneToMany(mappedBy = "author" , cascade = CascadeType.ALL)
-    private List<Book> bookId;
+    @JsonManagedReference
+    private List<Book> books;
 
     public Author(String name, String bio, Nationality nationality) {
         this.name = name;

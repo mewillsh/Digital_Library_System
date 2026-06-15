@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateBookDTO {
     @NotNull
-    private Long authID;
+    private Long authId;
     @NotNull
     private String name;
     @NotNull
-    private Long isbn;
+    private String isbn;
     @NotNull
     private Category category;
 }

@@ -1,0 +1,31 @@
+{
+  "items": [
+    {
+      "Author": [
+        {
+          "name": "Create Author",
+          "request": {
+            "method": "post",
+            "header": [
+              {
+                "key": "content-type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/author/create"
+            },
+            "body":{
+              "mode": "raw",
+              "raw": {
+                "name": "J.K. Rowling",
+                "bio": "British author, best known for Harry Potter series",
+                "nationality": "BRITISH"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

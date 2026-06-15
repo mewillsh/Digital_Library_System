@@ -1,6 +1,7 @@
 package com.example.digitalLibrarySystem.entity;
 
 import com.example.digitalLibrarySystem.entity.Enum.Category;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,16 +20,17 @@ public class Book {
     private String name;
     @NotNull(message = "isbn number is Required")
     @Size(min=12,max=12)
-    @Column(unique = true)
-    private Long isbn;
+    @Column(unique = true, length = 12)
+    private String isbn;
     @NotNull(message = "Require Category of Book")
     @Enumerated(EnumType.STRING)
     private Category category;
     @ManyToOne
-    @JoinColumn(name = "Authorid")
+    @JoinColumn(name = "author_id")
+    @JsonBackReference
     private Author author;
 
-    public Book(String name, Long isbn, Category category, Author author) {
+    public Book(String name, String isbn, Category category, Author author) {
         this.name = name;
         this.isbn = isbn;
         this.category = category;
