@@ -2,6 +2,7 @@ package com.example.digitalLibrarySystem.service;
 
 import com.example.digitalLibrarySystem.DTO.Request.Author.CreateAuthorDTO;
 import com.example.digitalLibrarySystem.DTO.Request.Author.UpdateAuthorDTO;
+import com.example.digitalLibrarySystem.DTO.Request.Book.CreateBookDTOHelper;
 import com.example.digitalLibrarySystem.DTO.Response.Author.AllBooksByAuthor;
 import com.example.digitalLibrarySystem.Repository.AuthorRepository;
 import com.example.digitalLibrarySystem.entity.Author;
@@ -20,7 +21,7 @@ public class AuthorServiceImp implements AuthorService{
     AuthorRepository repository;
     @Override
     public Author createAuthor(CreateAuthorDTO curr) {
-        Author author=new Author(curr.getName(),curr.getBio(),curr.getNationality());
+        Author author=dtoTOAuthor(curr);
         return repository.save(author);
     }
 
@@ -66,5 +67,26 @@ public class AuthorServiceImp implements AuthorService{
             result.setBooks(listBooks);
         }
         return result;
+    }
+    public Author dtoTOAuthor(CreateAuthorDTO createAuthors){
+        Author author=new Author();
+        author.setName(createAuthors.getName());
+        author.setBio(createAuthors.getBio());
+        author.setNationality(createAuthors.getNationality());
+        List<Book>curr=new ArrayList<>();
+        for(CreateBookDTOHelper now:createAuthors.getAuthorDTOList()){
+            Book temp=dtoToBook(now);
+            temp.setAuthor(author);
+            curr.add(temp);
+        }
+        author.setBooks(curr);
+        return author;
+    }
+    public Book dtoToBook(CreateBookDTOHelper createBook){
+        Book book=new Book();
+        book.setName(createBook.getName());
+        book.setIsbn(createBook.getIsbn());
+        book.setCategory(createBook.getCategory());
+        return book;
     }
 }

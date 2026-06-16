@@ -30,10 +30,4 @@ public class Book {
     @JsonBackReference
     private Author author;
 
-    public Book(String name, String isbn, Category category, Author author) {
-        this.name = name;
-        this.isbn = isbn;
-        this.category = category;
-        this.author = author;
-    }
 }
