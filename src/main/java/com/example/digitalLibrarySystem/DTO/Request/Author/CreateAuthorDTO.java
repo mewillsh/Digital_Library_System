@@ -19,5 +19,9 @@ public class CreateAuthorDTO {
     private String bio;
     @NotNull
     private Nationality nationality;
+    @NotNull
+    private String pubAddress;
+    @NotNull
+    private String pubName;
     private List<CreateBookDTOHelper> authorDTOList;
 }

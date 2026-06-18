@@ -5,8 +5,10 @@ import com.example.digitalLibrarySystem.DTO.Request.Author.UpdateAuthorDTO;
 import com.example.digitalLibrarySystem.DTO.Request.Book.CreateBookDTOHelper;
 import com.example.digitalLibrarySystem.DTO.Response.Author.AllBooksByAuthor;
 import com.example.digitalLibrarySystem.Repository.AuthorRepository;
+import com.example.digitalLibrarySystem.Repository.PublisherRepository;
 import com.example.digitalLibrarySystem.entity.Author;
 import com.example.digitalLibrarySystem.entity.Book;
+import com.example.digitalLibrarySystem.entity.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ import java.util.Optional;
 public class AuthorServiceImp implements AuthorService{
     @Autowired
     AuthorRepository repository;
+    @Autowired
+    PublisherRepository publisherRepository;
     @Override
     public Author createAuthor(CreateAuthorDTO curr) {
         Author author=dtoTOAuthor(curr);
@@ -73,13 +77,20 @@ public class AuthorServiceImp implements AuthorService{
         author.setName(createAuthors.getName());
         author.setBio(createAuthors.getBio());
         author.setNationality(createAuthors.getNationality());
+
+        Publisher publisher = publisherRepository.findByName(createAuthors.getPubName())
+                .orElseGet(() -> {
+                    Publisher p = new Publisher();
+                    p.setName(createAuthors.getPubName());
+                    p.setAddress(createAuthors.getPubAddress());
+                    return publisherRepository.save(p);
+                });
         List<Book>curr=new ArrayList<>();
         for(CreateBookDTOHelper now:createAuthors.getAuthorDTOList()){
             Book temp=dtoToBook(now);
-            temp.setAuthor(author);
-            curr.add(temp);
+            publisher.saveBook(temp);
+            author.saveBook(temp);
         }
-        author.setBooks(curr);
         return author;
     }
     public Book dtoToBook(CreateBookDTOHelper createBook){

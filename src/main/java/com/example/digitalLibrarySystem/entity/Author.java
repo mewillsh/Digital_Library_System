@@ -32,4 +32,13 @@ public class Author {
     @OneToMany(mappedBy = "author" , cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Book> books;
+
+    public void saveBook(Book book){
+        books.add(book);
+        book.setAuthor(this);
+    }
+    public void removeBook(Book book){
+        books.remove(book);
+        book.setAuthor(null);
+    }
 }
