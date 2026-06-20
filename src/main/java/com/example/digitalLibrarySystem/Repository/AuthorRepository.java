@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface AuthorRepository extends JpaRepository<Author,Long> {
+    Optional<Author>findByName(String name);
     @Query("SELECT a from Author a LEFT JOIN fetch a.books where a.authorId=:id")
     Optional<Author> findAuthorWithBooks(@Param("id")Long id);
 }

@@ -27,9 +27,10 @@ public class Book {
     private Category category;
     @ManyToOne
     @JoinColumn(name = "author_id")
-    @JsonBackReference
+    @JsonBackReference("author_book")
     private Author author;
     @ManyToOne
     @JoinColumn(name="publisher_id")
+    @JsonBackReference("publisher_book")
     private Publisher publisher;
 }

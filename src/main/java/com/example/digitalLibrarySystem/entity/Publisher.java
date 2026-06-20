@@ -1,8 +1,10 @@
 package com.example.digitalLibrarySystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,7 +17,8 @@ public class Publisher {
     private String address;
     private String name;
     @OneToMany(mappedBy = "publisher",cascade = CascadeType.ALL)
-    private List<Book> bookList;
+    @JsonManagedReference("publisher_book")
+    private List<Book> bookList=new ArrayList<>();
 
     public void saveBook(Book book){
         bookList.add(book);
@@ -23,6 +26,6 @@ public class Publisher {
     }
     public void removeBook(Book book){
         bookList.remove(book);
-        book.setPublisher(this);
+        book.setPublisher(null);
     }
 }

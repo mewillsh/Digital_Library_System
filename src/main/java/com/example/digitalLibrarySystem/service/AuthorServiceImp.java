@@ -25,8 +25,7 @@ public class AuthorServiceImp implements AuthorService{
     PublisherRepository publisherRepository;
     @Override
     public Author createAuthor(CreateAuthorDTO curr) {
-        Author author=dtoTOAuthor(curr);
-        return repository.save(author);
+        return dtoTOAuthor(curr);
     }
 
     @Override
@@ -73,11 +72,15 @@ public class AuthorServiceImp implements AuthorService{
         return result;
     }
     public Author dtoTOAuthor(CreateAuthorDTO createAuthors){
-        Author author=new Author();
-        author.setName(createAuthors.getName());
-        author.setBio(createAuthors.getBio());
-        author.setNationality(createAuthors.getNationality());
-
+        Author author=repository.findByName(createAuthors.getName()).orElseGet(
+                ()->{
+                    Author a=new Author();
+                    a.setName(createAuthors.getName());
+                    a.setNationality(createAuthors.getNationality());
+                    a.setBio(createAuthors.getBio());
+                    return repository.save(a);
+                }
+        );
         Publisher publisher = publisherRepository.findByName(createAuthors.getPubName())
                 .orElseGet(() -> {
                     Publisher p = new Publisher();
@@ -85,7 +88,6 @@ public class AuthorServiceImp implements AuthorService{
                     p.setAddress(createAuthors.getPubAddress());
                     return publisherRepository.save(p);
                 });
-        List<Book>curr=new ArrayList<>();
         for(CreateBookDTOHelper now:createAuthors.getAuthorDTOList()){
             Book temp=dtoToBook(now);
             publisher.saveBook(temp);

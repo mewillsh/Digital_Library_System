@@ -13,4 +13,5 @@ public interface BookService {
     public Book creatBook(CreateBookDTO curr);
     public Book updateBook(UpdateBookDTO curr);
     public Book deleteBook(Long id);
+    public Book findBook(Long id);
 }

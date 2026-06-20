@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,8 +31,8 @@ public class Author {
     @NotNull(message = "Nationality Cannot be Null")
     private Nationality nationality;
     @OneToMany(mappedBy = "author" , cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Book> books;
+    @JsonManagedReference("author_book")
+    private List<Book> books=new ArrayList<>();
 
     public void saveBook(Book book){
         books.add(book);
